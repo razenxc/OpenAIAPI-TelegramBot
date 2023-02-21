@@ -19,6 +19,30 @@ bot.command('start', async (ctx) => {
     }
 })
 
+bot.command('ping', async (ctx) => {
+    try {
+        await ctx.reply('Pong!')
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+bot.command('help', async (ctx) => {
+    try {
+        await ctx.reply('Help is currently empty as the bot is being developing!')
+    } catch (error) {
+        console.error(error)
+    }
+} )
+
+bot.command('ask', async (ctx) => {
+    try {
+        // code
+    }  catch(error) {
+        console.error(error)
+    }
+})
+
 
 bot.launch();
 console.log('The program has successfully completed the function bot.launch()')
