@@ -1,6 +1,7 @@
 const { Telegraf, Markup } = require('telegraf');
 require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
+const { text } = require('stream/consumers');
 
 // Configuring OpenAI API
 const configuration = new Configuration({
@@ -15,7 +16,7 @@ bot.command('start', async (ctx) => {
     try {
         await ctx.replyWithHTML('<b>This bot for using OpenAI API features in Telegram bot!\nUse /help for detailed info!</b>', Markup.keyboard(
             [
-                [Markup.button.text('/help')], [Markup.button.text('/ping')],
+                [Markup.button.text('/help'), ('/ping')],
                 [Markup.button.text('/generate')]
             ]
         ))
@@ -88,18 +89,16 @@ bot.action('genImageBtn', async (ctx) => {
     try {
         await ctx.answerCbQuery()
         await ctx.reply('Enter what do you need to generate')
-        bot.on('text', async (ctx) => {
-            console.log(ctx.message.text)
-            const response = await openai.createImage({
-                prompt: ctx.message.text,
-                n: 1,
-                size: "1024x1024",
-              });
-              image_url = response.data.data[0].url;
-              await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
-            // ctx.reply('API REQUESTS DISABLED')
-        })
-        
+        await ctx.reply('API REQUESTS DISABLED')
+
+            // const response = await openai.createImage({
+            //     prompt: ctx.message.text,
+            //     n: 1,
+            //     // size: "1024x1024",
+            //     size: "512x512",
+            //     });
+            //     image_url = response.data.data[0].url;
+            //     await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
     } catch (error) {
         console.error(error)
     }
