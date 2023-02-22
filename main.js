@@ -13,15 +13,27 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.command('start', async (ctx) => {
     try {
-        await ctx.reply('This bot for using OpenAI API features in Telegram bot!\nUse /help for detailed info!', Markup.inlineKeyboard(
+        await ctx.replyWithHTML('<b>This bot for using OpenAI API features in Telegram bot!\nUse /help for detailed info!</b>', Markup.keyboard(
             [
-                [Markup.button.callback('Help', 'helpBtn'), Markup.button.callback('Ping', 'pingBtn')],
-                [Markup.button.callback('Generate', 'genImage')]
+                [Markup.button.text('/help')], [Markup.button.text('/ping')],
+                [Markup.button.text('/generate')]
             ]
         ))
         console.log(ctx.message)
     } catch (error) {
         console.error(error)   
+    }
+})
+
+bot.command('test', async (ctx) => {
+    try {
+        await ctx.reply('Text', Markup.keyboard(
+            [
+                [Markup.button.text('/help')]
+            ]
+        ))
+    } catch (error) {
+        console.error(error)
     }
 })
 
@@ -35,7 +47,11 @@ bot.command('ping', async (ctx) => {
 
 bot.command('help', async (ctx) => {
     try {
-        await ctx.reply('Help is currently empty as the bot is being developing!')
+        await ctx.reply('Help is currently empty as the bot is being developing!', Markup.keyboard(
+            [
+                [Markup.button.text('/generate'), Markup.button.text('/ping')]
+            ]
+        ))
     } catch (error) {
         console.error(error)
     }
@@ -56,7 +72,7 @@ function createButtonReplyCommand(btnName, command) {
 bot.command('generate', async (ctx) => {
     try {
         // code
-        await ctx.reply('Choose what to generate', Markup.inlineKeyboard(
+        await ctx.reply('Enter what to generate', Markup.inlineKeyboard(
             [
                 [Markup.button.callback('Image',  'genImageBtn'), Markup.button.callback('Text',  'genTextBtn')]
             ]
@@ -81,6 +97,7 @@ bot.action('genImageBtn', async (ctx) => {
               });
               image_url = response.data.data[0].url;
               await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
+            // ctx.reply('API REQUESTS DISABLED')
         })
         
     } catch (error) {
