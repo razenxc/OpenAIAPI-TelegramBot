@@ -1,3 +1,8 @@
+```
+Code status: Starting but does not perform the desired functionality | In Developing
+```
+<img src="https://img.shields.io/github/languages/top/razenxc/OpenAIAPI-TelegramBot" alt="Top Languages"/> <img src="https://img.shields.io/github/languages/code-size/razenxc/OpenAIAPI-TelegramBot" alt="GitHub code size in bytes"/>
+
 # OpenAIAPI-TelegramBot
 Telegram bot that allows users to query OpenAI API via Node.js library Telegraf.js<br>
 # How to run bot?
@@ -14,6 +19,11 @@ The version does not have to match the one written here, but the main thing is t
 npm install
 ```
 ## Starting Bot
+### Add .env file in root with content like below
+```
+BOT_TOKEN=telegramBotToken
+OPENAI_API_KEY=openAiApiToken
+```
 ### Start Bot in Dev mode
 ```
 npm run dev
