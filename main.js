@@ -83,27 +83,46 @@ bot.command('generate', async (ctx) => {
     }
 })
 
-
+// async function generateImage(ctx) {
+    // const response = await openai.createImage({
+    //             prompt: ctx.telegrm.message,
+    //             n: 1,
+    //             // size: "1024x1024",
+    //             size: "512x512",
+    //             });
+    //             image_url = response.data.data[0].url;
+    //             await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
+// }
 
 bot.action('genImageBtn', async (ctx) => {
     try {
         await ctx.answerCbQuery()
         await ctx.reply('Enter what do you need to generate')
-        await ctx.reply('API REQUESTS DISABLED')
-
-            // const response = await openai.createImage({
-            //     prompt: ctx.message.text,
-            //     n: 1,
-            //     // size: "1024x1024",
-            //     size: "512x512",
-            //     });
-            //     image_url = response.data.data[0].url;
-            //     await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
+        await bot.on('text', async (ctx) => {
+            const response = await openai.createImage({
+                prompt: ctx.message.text,
+                n: 1,
+                // size: "1024x1024",
+                size: "512x512",
+                });
+                image_url = response.data.data[0].url;
+                await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
+        })
+        
     } catch (error) {
         console.error(error)
     }
 })
 
+
+
+// bot.hears(/.*/, (ctx) => {
+//     // получаем текстовое сообщение от пользователя
+//     const message = ctx.message.text;
+  
+//     // отправляем сообщение в чат
+//     ctx.reply(`Вы отправили сообщение: ${message}`);
+//   });
 
 bot.launch();
 console.log('The program has successfully completed the function bot.launch()')
