@@ -3,6 +3,9 @@ Code status: Starting but does not perform the desired functionality | In Develo
 ```
 <img src="https://img.shields.io/github/languages/top/razenxc/OpenAIAPI-TelegramBot" alt="Top Languages"/> <img src="https://img.shields.io/github/languages/code-size/razenxc/OpenAIAPI-TelegramBot" alt="GitHub code size in bytes"/>
 
+<img width="100px" height="100px" src="https://user-images.githubusercontent.com/84779107/221437804-224e1e37-4015-4d12-aec5-44b685331b49.png" alt="OpenAI"/><img width="100px" height="100px" src="https://user-images.githubusercontent.com/84779107/221437843-96288c8b-f2d4-47c6-b03a-1fd27d35931b.png" alt="Telegram"/><img width="100px" height="100px" src="https://user-images.githubusercontent.com/84779107/221437882-07576059-1dd1-45de-87f6-482b4edba285.png" alt="Telegraf.js"/>
+
+
 # OpenAIAPI-TelegramBot
 Telegram bot that allows users to query OpenAI API via Node.js library Telegraf.js<br>
 # How to run bot?
