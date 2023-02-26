@@ -98,7 +98,7 @@ bot.action('genBtn', async (ctx) => {
 
 bot.action('genImageBtn', async (ctx) => {
     try {
-        console.warn('OVER API USAGE');
+        console.warn('Excessive use of API due to not correctly working code !!!!');
         await ctx.answerCbQuery()
         await ctx.reply('Enter what do you need to generate')
         bot.hears(/.+/i, async (ctx) => {
