@@ -12,12 +12,13 @@ const openai = new OpenAIApi(configuration);
 // BOT
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
+
 bot.command('start', async (ctx) => {
     try {
-        await ctx.replyWithHTML('<b>This bot for using OpenAI API features in Telegram bot!\nUse /help for detailed info!</b>', Markup.keyboard(
+        await ctx.replyWithHTML('<b>This bot for using OpenAI API features in Telegram bot!\nUse /help for detailed info!</b>', Markup.inlineKeyboard(
             [
-                [Markup.button.text('/help'), ('/ping')],
-                [Markup.button.text('/generate')]
+                [Markup.button.callback('Help', 'helpBtn'), Markup.button.callback('Ping', 'pingBtn')],
+                [Markup.button.callback('Generate', 'genBtn')]
             ]
         ))
         console.log(ctx.message)
@@ -26,37 +27,38 @@ bot.command('start', async (ctx) => {
     }
 })
 
-bot.command('test', async (ctx) => {
+bot.action('helpBtn', async (ctx) => {
     try {
-        await ctx.reply('Text', Markup.keyboard(
+        await ctx.answerCbQuery()
+        await ctx.reply('Help is currently empty as the bot is being developing!', Markup.inlineKeyboard(
             [
-                [Markup.button.text('/help')]
-            ]
-        ))
-    } catch (error) {
-        console.error(error)
-    }
-})
-
-bot.command('ping', async (ctx) => {
-    try {
-        await ctx.reply('Pong!')
-    } catch (error) {
-        console.error(error)
-    }
-})
-
-bot.command('help', async (ctx) => {
-    try {
-        await ctx.reply('Help is currently empty as the bot is being developing!', Markup.keyboard(
-            [
-                [Markup.button.text('/generate'), Markup.button.text('/ping')]
+                [Markup.button.callback('Back', 'backToStartBtn')]
             ]
         ))
     } catch (error) {
         console.error(error)
     }
 } )
+
+bot.action('backToStartBtn', async (ctx) => { 
+    try {
+        await ctx.answerCbQuery()
+        await ctx.reply('dev is unskill and cannot add back to start button, use /start')
+    } catch (error) {
+        console.error(error)
+    }
+    
+})
+
+
+bot.action('pingBtn', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.reply('Pong!')
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 function createButtonReplyCommand(btnName, command) {
     bot.action(btnName, async (ctx) => {
@@ -70,10 +72,10 @@ function createButtonReplyCommand(btnName, command) {
 }
 
 
-bot.command('generate', async (ctx) => {
+bot.action('genBtn', async (ctx) => {
     try {
         // code
-        await ctx.reply('Enter what to generate', Markup.inlineKeyboard(
+        await ctx.reply('Select what to generate', Markup.inlineKeyboard(
             [
                 [Markup.button.callback('Image',  'genImageBtn'), Markup.button.callback('Text',  'genTextBtn')]
             ]
@@ -98,17 +100,16 @@ bot.action('genImageBtn', async (ctx) => {
     try {
         await ctx.answerCbQuery()
         await ctx.reply('Enter what do you need to generate')
-        await bot.on('text', async (ctx) => {
+        bot.hears(/.+/i, async (ctx) => {
             const response = await openai.createImage({
                 prompt: ctx.message.text,
                 n: 1,
                 // size: "1024x1024",
-                size: "512x512",
+                size: "256x256",
                 });
                 image_url = response.data.data[0].url;
                 await ctx.replyWithPhoto(response.data.data[0].url, { caption: 'Generated image: ' + ctx.message.text })
-        })
-        
+        }) 
     } catch (error) {
         console.error(error)
     }
